@@ -2,24 +2,47 @@
 
 require_once __DIR__ . '/Database.php';
 
-$sql = <<<SQL
+$db = Database::getInstance();
 
-CREATE TABLE IF NOT EXISTS usuarios(
-  id integer primary key not null,
-  nome varchar(50) default('Usuario'),
-  email varchar(100) unique not null,
-  senha varchar(100) not null
-);
+$db->exec("
+  CREATE TABLE IF NOT EXISTS usuarios(
+    id integer primary key auto_increment not null,
+    nome varchar(50) default('Usuario'),
+    email varchar(100) unique not null,
+    senha varchar(100) not null
+  )
+");
+
+$db->exec("
+  CREATE TABLE IF NOT EXISTS livros(
+    id integer primary key auto_increment not null,
+    titulo varchar(100) not null,
+    autor varchar(100) not null,
+    descricao text,
+    nota integer default(0)
+  )
+");
+
+echo "Tables criadas";
+
+// $sql = <<<SQL
+
+// CREATE TABLE IF NOT EXISTS usuarios(
+//   id integer primary key not null,
+//   nome varchar(50) default('Usuario'),
+//   email varchar(100) unique not null,
+//   senha varchar(100) not null
+// );
 
 
-CREATE TABLE IF NOT EXISTS livros(
-  id integer primary key not null,
-  titulo varchar(100) not null,
-  autor varchar(100) not null,
-  descricao text,
-  nota integer default(0)
-);
-SQL;
+// CREATE TABLE IF NOT EXISTS livros(
+//   id integer primary key not null,
+//   titulo varchar(100) not null,
+//   autor varchar(100) not null,
+//   descricao text,
+//   nota integer default(0)
+// );
+// SQL;
 
-Database::getInstance()->exec($sql);
-echo "Tables criadas com sucesso!";
+// Database::getInstance()->exec($sql);
+// echo "Tables criadas com sucesso!";
